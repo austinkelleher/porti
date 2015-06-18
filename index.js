@@ -70,8 +70,8 @@ exports.getPortData = function(port, callback) {
 		//The lines are split up using the size of the text, so they're evenly
 		//spaced. So we first remove all of those extra spaces between words,
 		//and then split on individual spaces to create the objects.
-		portDataKeys = bashResp[0].replace(/\s\s+/g, ' ').split(' ');
-		portDataVals = bashResp[1].replace(/\s\s+/g, ' ').split(' ');
+		var portDataKeys = bashResp[0].replace(/\s\s+/g, ' ').split(' ');
+		var portDataVals = bashResp[1].replace(/\s\s+/g, ' ').split(' ');
 
 		var portData = {};
 
