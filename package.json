@@ -1,6 +1,6 @@
 {
     "name": "porti",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "Node.js utility for system ports",
     "main": "index.js",
     "scripts": {
