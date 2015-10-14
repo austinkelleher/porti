@@ -33,7 +33,7 @@ exports.getUnusedPort = function(options, callback) {
 
 	lsof(port, function (error, stdout, stderr) {
 		if(stdout) {
-			return getPort(options, callback);
+			return getUnusedPort(options, callback);
 		}
 
 		if(options.env && typeof(options.env) === 'string') {

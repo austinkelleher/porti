@@ -23,6 +23,7 @@ describe('Porti', function() {
             porti.getUnusedPort({
                 env: 'PORTI_PORT'
             }, function(err, port) {
+                expect(err).to.not.exist;
                 expect(process.env['PORTI_PORT']).to.equal(port.toString());
                 done();
             });
@@ -37,6 +38,7 @@ describe('Porti', function() {
                 }).listen(port);
 
                 porti.getPortData(port, function(err, data) {
+                    expect(err).to.not.exist;
                     expect(data.command).to.equal('node');
                     done();
                 });
