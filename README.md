@@ -1,4 +1,7 @@
 # porti
+[![Build Status](https://travis-ci.org/austinkelleher/porti.svg)](https://travis-ci.org/austinkelleher/porti)
+![NPM version](https://badge.fury.io/js/porti.svg)
+
 Node.js utility for obtaining data about tcp ports.
 
 Currently only supported on \*NIX using [lsof](https://en.wikipedia.org/wiki/Lsof)
