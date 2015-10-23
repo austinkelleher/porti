@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/austinkelleher/porti.svg)](https://travis-ci.org/austinkelleher/porti)
 ![NPM version](https://badge.fury.io/js/porti.svg)
 
-Node.js utility for obtaining data about tcp ports.
+Node.js utility for obtaining random TCP ports and data about ports.
 
 ## Installation
 ```bash

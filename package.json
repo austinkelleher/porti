@@ -1,6 +1,6 @@
 {
     "name": "porti",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "description": "Node.js utility for system ports",
     "main": "index.js",
     "scripts": {
@@ -13,7 +13,9 @@
     "keywords": [
         "port",
         "tcp",
-        "system"
+        "system",
+        "random",
+        "utility"
     ],
     "author": "Austin Kelleher (a@alk.im)",
     "license": "MIT",
