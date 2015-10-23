@@ -1,3 +1,4 @@
+var net = require('net');
 var exec = require('child_process').exec;
 
 /**
@@ -27,20 +28,31 @@ function lsof(port, callback) {
 *   - env: environment variable to set
 */
 var getUnusedPort = exports.getUnusedPort = function(options, callback) {
+    if (arguments.length === 1 && typeof options === 'function') {
+        callback = options;
+        options = {};
+    }
+
     var min = options.min || DEFAULT_MIN_PORT_RANGE;
     var max = options.max || DEFAULT_MAX_PORT_RANGE;
     var port = getRandomInt(min, max);
 
-    lsof(port, function (error, stdout, stderr) {
-        if (stdout) {
-            return getUnusedPort(options, callback);
-        }
+    var server = net.createServer();
 
-        if (options.env && typeof(options.env) === 'string') {
-            process.env[options.env.toString()] = port;
-        }
+    server.listen(port, function (err) {
+        server.once('close', function () {
+            var env = options.env;
+            if (env && typeof(env) === 'string') {
+                process.env[env] = port;
+            }
 
-        callback(null, port);
+            callback(err, port);
+        });
+        server.close();
+    });
+
+    server.on('error', function (err) {
+        getUnusedPort(options, callback);
     });
 };
 

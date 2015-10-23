@@ -33,6 +33,14 @@ describe('Porti', function() {
                 done();
             });
         });
+
+        it('should allow getting unused port without options', function(done) {
+            porti.getUnusedPort(function(err, port) {
+                expect(err).to.not.exist;
+                expect(port).to.exist;
+                done();
+            });
+        });
     });
 
     describe('Getting port data', function() {

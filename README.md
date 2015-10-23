@@ -4,8 +4,6 @@
 
 Node.js utility for obtaining data about tcp ports.
 
-Currently only supported on \*NIX using [lsof](https://en.wikipedia.org/wiki/Lsof)
-
 ## Installation
 ```bash
 npm install porti --save
@@ -26,6 +24,7 @@ porti.getUnusedPort({
 });
 ```
 
+`getPortData` currently only supported on \*NIX using [lsof](https://en.wikipedia.org/wiki/Lsof):
 
 ```javascript
 // getPortData returns an object of information regarding the port specified
