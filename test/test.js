@@ -9,53 +9,25 @@ chai.config.includeStack = true;
 require('chai').should();
 var expect = require('chai').expect;
 
-describe('Porti', function() {
+describe('Porti', () => {
+  it('should get unused port without options', () => {
+    return porti.getUnusedPort()
+      .then((port) => expect(port).to.exist);
+  });
 
-    describe('Getting unused port', function() {
-        it('should get unused port with min, max options', function(done) {
-            porti.getUnusedPort({
-                min: 2000,
-                max: 5000
-            }, function(err, port) {
-                expect(err).to.not.exist;
-                expect(port).to.be.at.most(5000);
-                expect(port).to.be.above(2000);
-                done();
-            });
-        });
+  it('should get port in specified range', () => {
+    let min = 5000;
+    let max = 7000;
 
-        it('should allow setting an environment variable', function(done) {
-            porti.getUnusedPort({
-                env: 'PORTI_PORT'
-            }, function(err, port) {
-                expect(err).to.not.exist;
-                expect(process.env['PORTI_PORT']).to.equal(port.toString());
-                done();
-            });
-        });
+    return porti.getUnusedPort({ min, max })
+      .then(port => {
+        expect(port).to.be.at.least(min);
+        expect(port).to.be.at.most(max);
+      });
+  });
 
-        it('should allow getting unused port without options', function(done) {
-            porti.getUnusedPort(function(err, port) {
-                expect(err).to.not.exist;
-                expect(port).to.exist;
-                done();
-            });
-        });
-    });
-
-    describe('Getting port data', function() {
-        it('should deliver port data on port in use', function(done) {
-            porti.getUnusedPort({}, function(err, port) {
-                //Dummy server
-                require('net').createServer(function (socket) {
-                }).listen(port);
-
-                porti.getPortData(port, function(err, data) {
-                    expect(err).to.not.exist;
-                    expect(data.command).to.equal('node');
-                    done();
-                });
-            });
-        });
-    });
+  it('should throw error if no unused port found', () => {
+    return porti.getUnusedPort({ min: -1, max: -1 })
+      .catch(err => expect(err).to.exist);
+  });
 });
