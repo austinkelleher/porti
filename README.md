@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/austinkelleher/porti.svg)](https://travis-ci.org/austinkelleher/porti)
 ![NPM version](https://badge.fury.io/js/porti.svg)
 
-Node.js utility for obtaining random TCP ports and data about ports.
+Node.js utility for obtaining random TCP ports
 
 ## Installation
 ```bash
@@ -10,7 +10,7 @@ npm install porti --save
 ```
 ## Usage
 ```javascript
-var porti = require('porti');
+const porti = require('porti');
 
 // Finding an unused port in a range of ports. If a range is not specified,
 // Porti falls back to a default range DEFAULT_MIN_PORT_RANGE - DEFAULT_MAX_PORT_RANGE.
@@ -18,18 +18,7 @@ var porti = require('porti');
 porti.getUnusedPort({
     min: 2000,          // lower bound of random port range to select from
     max: 5000,          // upper bound of random port range to select from
-    env: 'PORTI_PORT'   // environment variable to set the port equal to
-}, function(err, port) {
-    console.log(port);
-});
-```
-
-`getPortData` currently only supported on \*NIX using [lsof](https://en.wikipedia.org/wiki/Lsof):
-
-```javascript
-// getPortData returns an object of information regarding the port specified
-// in the first argument
-porti.getPortData(8080, function(err, data) {
-    console.log(data);
+}.then((err, port) => {
+    ...
 });
 ```
