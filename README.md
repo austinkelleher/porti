@@ -18,7 +18,7 @@ const porti = require('porti');
 porti.getUnusedPort({
     min: 2000,          // lower bound of random port range to select from
     max: 5000,          // upper bound of random port range to select from
-}.then((err, port) => {
+}).then((err, port) => {
     ...
 });
 ```
