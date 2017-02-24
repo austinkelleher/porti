@@ -5,8 +5,8 @@ const getUnusedPort = exports.getUnusedPort = (options) => {
     options = options || {};
 
     let min = options.min || 1024;
-    let max = options.max;
     let port = options.port || min;
+    let max = options.max;
 
     let server = net.createServer();
 
@@ -15,6 +15,10 @@ const getUnusedPort = exports.getUnusedPort = (options) => {
     }
 
     server.listen(port, (err) => {
+      if (err) {
+        return reject(err);
+      }
+
       server.once('close', () => resolve(port));
       server.close();
     });

@@ -1,8 +1,6 @@
 /**
 * Using .exist as a property instead of a function makes jshint unhappy!
 */
-/*jshint -W030 */
-
 var porti = require('../');
 var chai = require('chai');
 chai.config.includeStack = true;
