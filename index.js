@@ -1,17 +1,19 @@
 const net = require('net');
 
 const getUnusedPort = exports.getUnusedPort = (options) => {
-  return new Promise((resolve, reject) => {
-    options = options || {};
+  options = options || {};
 
-    let min = options.min || 1024;
-    let port = options.port || min;
-    let max = options.max;
+  let min = options.min || 1024;
+  let port = options.port || min;
+  let max = options.max;
 
+  let promise = new Promise((resolve, reject) => {
     let server = net.createServer();
 
     if (port >= max) {
-      return reject('Could not find an unused port');
+      let error = new Error('Could not find an unused port');
+      error.code = 'NO_UNUSED';
+      return reject(error);
     }
 
     server.listen(port, (err) => {
@@ -23,6 +25,11 @@ const getUnusedPort = exports.getUnusedPort = (options) => {
       server.close();
     });
 
-    server.on('error', () => getUnusedPort({ min, max, port: ++port }));
+    server.on('error', reject);
+  });
+
+  return promise.catch((err) => {
+    if (err.code === 'NO_UNUSED') throw err;
+    return getUnusedPort({ min, max, port: ++port });
   });
 };
