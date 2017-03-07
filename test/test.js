@@ -1,3 +1,5 @@
+'use strict';
+
 const porti = require('../');
 const chai = require('chai');
 chai.config.includeStack = true;
