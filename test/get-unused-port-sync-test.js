@@ -26,7 +26,7 @@ function _closeServer (server) {
   });
 }
 
-describe('Porti', () => {
+describe('Porti Sync', () => {
   let dummyServers;
 
   beforeEach(() => {
@@ -49,31 +49,29 @@ describe('Porti', () => {
   });
 
   it('should get unused port without options', () => {
-    return porti.getUnusedPort()
-      .then((port) => expect(port).to.exist);
+    const port = porti.getUnusedPortSync();
+    expect(port).to.exist;
   });
 
   it('should get port in specified range', () => {
     let min = 5000;
     let max = 7000;
 
-    return porti.getUnusedPort({ min, max })
-      .then(port => {
-        expect(port).to.be.at.least(min);
-        expect(port).to.be.at.most(max);
-      });
+    const port = porti.getUnusedPortSync({ min, max });
+    expect(port).to.be.at.least(min);
+    expect(port).to.be.at.most(max);
   });
 
   it('should throw error if no unused port found', () => {
-    return porti.getUnusedPort({ min: -1, max: -1 })
-      .catch(err => expect(err).to.exist);
+    expect(() => {
+      porti.getUnusedPortSync({ min: -1, max: -1 });
+    }).to.throw('Could not find an unused port');
   });
 
   it('should continue to find an unused port if ports are in use', () => {
-    return porti.getUnusedPort({
+    const port = porti.getUnusedPortSync({
       min: 5000
-    }).then((port) => {
-      expect(port).to.equal(5002);
     });
+    expect(port).to.equal(5002);
   });
 });

@@ -1,11 +1,14 @@
 'use strict';
 
 const net = require('net');
+const deasync = require('deasync');
 
-const getUnusedPort = exports.getUnusedPort = (options) => {
+const DEFAULT_MIN_PORT = 1024;
+
+const getUnusedPort = exports.getUnusedPort = function (options) {
   options = options || {};
 
-  let min = options.min || 1024;
+  let min = options.min || DEFAULT_MIN_PORT;
   let port = options.port || min;
   let max = options.max;
 
@@ -34,4 +37,25 @@ const getUnusedPort = exports.getUnusedPort = (options) => {
     if (err.code === 'NO_UNUSED') throw err;
     return getUnusedPort({ min, max, port: ++port });
   });
+};
+
+exports.getUnusedPortSync = function (options) {
+  let done = false;
+  let port;
+  let err;
+
+  getUnusedPort(options)
+    .then((_port) => {
+      done = true;
+      port = _port;
+    })
+    .catch((_err) => {
+      done = true;
+      err = _err;
+    });
+
+  deasync.loopWhile(() => !done);
+
+  if (err) throw err;
+  return port;
 };
