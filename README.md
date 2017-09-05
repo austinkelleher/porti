@@ -17,7 +17,7 @@ npm install porti --save
 const porti = require('porti');
 
 // Finding an unused port in a range of ports. If a range is not specified,
-// Porti falls back to a default range DEFAULT_MIN_PORT_RANGE - DEFAULT_MAX_PORT_RANGE.
+// Porti starts at port 1024 and stops when it has found an unused port.
 // None of the properties in the first options argument are required.
 porti.getUnusedPort({
   min: 2000,          // lower bound of random port range to select from
@@ -26,5 +26,17 @@ porti.getUnusedPort({
   ...
 }).catch((err) => {
   ...
+})
+```
+
+Synchronous API:
+
+```js
+// Finding an unused port in a range of ports. If a range is not specified,
+// Porti starts at port 1024 and stops when it has found an unused port.
+// None of the properties in the first options argument are required.
+const port = porti.getUnusedPortSync({
+  min: 2000,          // lower bound of random port range to select from
+  max: 5000,          // upper bound of random port range to select from
 })
 ```
